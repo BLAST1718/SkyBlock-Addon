@@ -20,7 +20,7 @@ use room17\SkyBlock\session\SessionLocator;
 use room17\SkyBlock\utils\Invitation;
 use room17\SkyBlock\utils\message\MessageContainer;
 
-class Main extends PluginBase{
+class Skyblock extends PluginBase{
 
 	public function onEnable(){
 		$this->getLogger()->info("SkyBlock Menu enabled made by SkyCraft");
