@@ -44,6 +44,7 @@ class Main extends PluginBase{
                     $player->sendMessage("SkyBlockGui");
                     return true;
                 }
+		$session = SessionLocator::getSession($player);
                 if (!$session->hasIsland()) {
                         $this->islandCreation($player, $session);
                     } else {
