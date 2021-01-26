@@ -1,2 +1,2 @@
 # SkyBlockGui
-A skyblock gui plugin/addon
+An addon for [SkyBlock] (https://poggit.pmmp.io/p/SkyBlock) plugin
