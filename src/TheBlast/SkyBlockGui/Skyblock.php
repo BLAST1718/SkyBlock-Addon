@@ -20,7 +20,7 @@ use room17\SkyBlock\session\SessionLocator;
 use room17\SkyBlock\utils\Invitation;
 use room17\SkyBlock\utils\message\MessageContainer;
 
-class Skyblock extends PluginBase{
+class Main extends PluginBase{
 
 	public function onEnable(){
 		$this->getLogger()->info("enabled");
