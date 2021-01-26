@@ -245,3 +245,4 @@ class Skyblock extends PluginBase{
 		}
 		return $action->discard();
 	}
+}
