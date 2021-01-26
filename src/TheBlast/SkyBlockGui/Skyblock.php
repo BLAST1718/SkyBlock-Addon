@@ -1,6 +1,6 @@
 <?php
 
-namespace TheBlast\Menu;
+namespace TheBlast\SkyBlockGui;
 
 use jojoe77777\formapi\CustomForm;
 use muqsit\invmenu\InvMenu;
