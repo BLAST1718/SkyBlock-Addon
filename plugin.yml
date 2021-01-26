@@ -1,6 +1,6 @@
 name: SkyBlockGui
 author: TheBlast
-main: TheBlast\SkyBlockGui\Skyblock
+main: TheBlast\SkyBlockGui\Main
 version: 1.0.0
 api: 3.0.0
 depend:
