@@ -11,6 +11,10 @@ An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an int
 
 [Clarence](https://github.com/Clarence2810) and [EndermanBug](https://github.com/Endermanbugzjfc) for helping me fix errors and for teaching me.
 
+## Tutorial
+
+## Links
+
 ## WARNING!! 
 1.Make sure to restart your server (not reload) when u change a somethings on config or the plugin will not work. <br>
 2.Make sure to not have the same id within the same category or it will have problems. <br>
