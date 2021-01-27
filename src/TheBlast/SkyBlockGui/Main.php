@@ -58,7 +58,7 @@ class Main extends PluginBase{
         return true;
     }
 
-	public function islandManagement(Player $player){
+	public function islandCreation(Player $player){
 		$menu = InvMenu::create(InvMenu::TYPE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "sbmenu"]));
@@ -81,7 +81,7 @@ class Main extends PluginBase{
 		return $action->discard();
 	}
 
-	public function islandCreation(Player $player){
+	public function islandManagement(Player $player){
 		$menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "sbmen"]));
