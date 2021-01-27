@@ -25,3 +25,7 @@ None for now. <br>
 ## Issues and Suggestion <br>
 
 If there are any issues or suggestion you would like me to know go [here](https://github.com/BLAST1718/SkyBlockGui/issues) and click # New issues
+
+## Support me
+
+Support me by joining my [discord]() or by putting a star on this repo.
