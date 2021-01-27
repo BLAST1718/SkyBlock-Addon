@@ -49,9 +49,9 @@ class Main extends PluginBase{
                 }
 		$session = SessionLocator::getSession($player);
                 if (!$session->hasIsland()) {
-                        $this->islandManagement($player, $session);
-                    } else {
                         $this->islandCreation($player, $session);
+                    } else {
+                        $this->islandManagement($player, $session);
                 }
                     break;
         }
@@ -62,7 +62,7 @@ class Main extends PluginBase{
 		$menu = InvMenu::create(InvMenu::TYPE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "sbmenu"]));
-		$menu->setName($this->getConfig()->get("Island-Creation-Name"));
+		$menu->setName("Island creation");
 		$inv = $menu->getInventory();
 		$grass = Item::get(2)->setCustomName("§r§aCreate Island");
 		$inv->setItem(13, $grass);
