@@ -20,7 +20,7 @@ An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an int
 2.Make sure to not have the same id within the same category or it will have problems. <br>
 
 ## Known Bugs: <br>
-None for now. <br>
+You cant put meta. if anyone know how pls tell me. Discord: TheBlast#5600
 
 ## Issues and Suggestion <br>
 
