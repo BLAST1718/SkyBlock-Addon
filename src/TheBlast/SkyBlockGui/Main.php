@@ -59,13 +59,13 @@ class Main extends PluginBase{
     }
 
 	public function islandManagement(Player $player){
-		$menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
+		$menu = InvMenu::create(InvMenu::TYPE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "sbmenu"]));
 		$menu->setName($this->getConfig()->get("Island-Creation-Name"));
 		$inv = $menu->getInventory();
-		$skull = Item::get(397, 3)->setCustomName("§r§aCreate Island");
-		$inv->setItem(0, $skull);
+		$grass = Item::get(2)->setCustomName("§r§aCreate Island");
+		$inv->setItem(13, $grass);
 		$menu->send($player);
 	}
 
