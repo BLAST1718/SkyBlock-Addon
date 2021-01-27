@@ -15,6 +15,9 @@ An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an int
 1.Make sure to restart your server (not reload) when u change a somethings on config or the plugin will not work. <br>
 2.Make sure to not have the same id within the same category or it will have problems. <br>
 
+## Known Bugs: <br>
+None for now. <br>
+
 ## Issues and Suggestion <br>
 
 If there are any issues or suggestion you would like me to know go [here](https://github.com/BLAST1718/SkyBlockGui/issues) and click # New issues
