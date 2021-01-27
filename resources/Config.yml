@@ -1,1 +1,38 @@
+#Creation Menu management
+Island-Creation-Menu-Name: "Island"
 
+Create-Island-Item-Name: "Create Island"
+Item-id-1: "1"
+
+Invite-Manage-Item-Name: "Invite Players"
+Item-id-2: "2"
+
+#Choose Island Menu Name
+Choose-Island-Menu-Name: "Choose what island you want to make"
+
+Basic-Island-Item-Name: "Basic Island"
+Item-id-3: "10"
+
+Palm-Island-Item-Name: "Palm Island"
+Item-id-4: "7"
+
+Shelly-Island-Item-Name: "Shelly Island"
+Item-id-5: "4"
+
+Op-Island-Item-Name: "Op Island"
+Item-id-6: "6"
+
+Lost-Island-Item-Name: "Lost Island"
+Item-id-7: "11"
+
+#Manage Island Menu Name
+Island-Management-Menu-Name: "Manage Island"
+
+Manage-Members-Item-Name: "Manage Members"
+Item-id-8: "19"
+
+Manage-Island-Item-Name: "Manage Island"
+Item-id-9: "99"
+
+Remove-Island-Item-Name: "Remove Island"
+Item-id-10: "99"
