@@ -6,11 +6,15 @@ An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an int
 1.Download the latest plugin update [here](https://poggit.pmmp.io/ci/BLAST1718/SkyBlockGui/SkyBlockGui) <br>
 2.Put it on your plugins folder <br>
 3.Go to plugin_data folder click SkyBlockGui folder and click Config.yml <br>
-4.Make sure to restart your server when u change a thing on config. <br>
 
 ## Special Thanks to: <br>
 
-[Clarence](https://github.com/Clarence2810) and [EndermanBug](https://github.com/Endermanbugzjfc) for helping me fix errors and teached me .
+[Clarence](https://github.com/Clarence2810) and [EndermanBug](https://github.com/Endermanbugzjfc) for helping me fix errors and for teaching me.
 
 ## WARNING!! 
-Still in development
+1.Make sure to restart your server (not reload) when u change a somethings on config or the plugin will not work. <br>
+2.Make sure to not have the same id within the same category or it will have problems. <br>
+
+## Issues and Suggestion <br>
+
+If there are any issues or suggestion you would like me to know go [here](https://github.com/BLAST1718/SkyBlockGui/issues) and click # New issues
