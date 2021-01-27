@@ -3,10 +3,10 @@
 namespace TheBlast\SkyBlockGui;
 
 use jojoe77777\formapi\CustomForm;
-use muqsit\invmenu\InvMenu;
-use muqsit\invmenu\InvMenuHandler;
-use muqsit\invmenu\transaction\InvMenuTransaction;
-use muqsit\invmenu\transaction\InvMenuTransactionResult;
+use libs\muqsit\invmenu\InvMenu;
+use libs\muqsit\invmenu\InvMenuHandler;
+use libs\muqsit\invmenu\transaction\InvMenuTransaction;
+use libs\muqsit\invmenu\transaction\InvMenuTransactionResult;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
