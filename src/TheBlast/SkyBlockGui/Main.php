@@ -31,9 +31,9 @@ class Main extends PluginBase{
 		if(!InvMenuHandler::isRegistered()){
 			InvMenuHandler::register($this);
 		}
-		$command = new PluginCommand("is", $this);
+		$command = new PluginCommand("sb1", $this);
 		$command->setDescription("Skyblock Menu");
-		$this->getServer()->getCommandMap()->register("is", $command);
+		$this->getServer()->getCommandMap()->register("sb1", $command);
 	}
 
 	public function onDisable(){
@@ -42,7 +42,7 @@ class Main extends PluginBase{
 
 	public function onCommand(CommandSender $player, Command $cmd, string $label, array $args) : bool{
         switch($cmd->getName()){
-            case "is":
+            case "sb1":
                 if(!$player instanceof Player){
                     $player->sendMessage("SkyBlockGui");
                     return true;
