@@ -49,9 +49,9 @@ class Main extends PluginBase{
                 }
 		$session = SessionLocator::getSession($player);
                 if (!$session->hasIsland()) {
-                        $this->islandManagement($player, $session);
-                    } else {
                         $this->islandCreation($player, $session);
+                    } else {
+                        $this->islandManagement($player, $session);
                 }
                     break;
         }
@@ -79,7 +79,7 @@ class Main extends PluginBase{
 			$inv = $action->getAction()->getInventory();
 			$inv->onClose($player);
 			return $action->discard()->then(function(Player $player) : void{
-			         $this->IslandCreate2($player);
+			         $this->IslandCreation2($player);
 			});
 		}
 		if($item->getCustomName() === "§r§aAccept Invite"){
