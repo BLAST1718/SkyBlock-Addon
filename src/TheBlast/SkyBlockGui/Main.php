@@ -154,4 +154,5 @@ class Main extends PluginBase{
 			         $this->ismanageisland($player);
 			});
 		}
+    }
 }
