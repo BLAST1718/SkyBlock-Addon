@@ -10,7 +10,7 @@ An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an int
 
 ## Special Thanks to: <br>
 
-[Clarence](https://github.com/Clarence2810) and [EndermanBug](https://github.com/Endermanbugzjfc)
+[Clarence](https://github.com/Clarence2810) and [EndermanBug](https://github.com/Endermanbugzjfc) for helping me fix errors and teached me .
 
 ## WARNING!! 
 Still in development
