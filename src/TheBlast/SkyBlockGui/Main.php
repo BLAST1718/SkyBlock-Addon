@@ -62,12 +62,12 @@ class Main extends PluginBase{
 		$menu = InvMenu::create(InvMenu::TYPE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "iscreate"]));
-		$menu->setName("Island Create");
+		$menu->setName($this->getConfig()->get("Island-Creation-Menu-Name"));
 		$inv = $menu->getInventory();
-		$grass = Item::get(2)->setCustomName("§r§aCreate Island");
-		$stone = Item::get(1)->setCustomName("§r§aAccept Invite");
-		$inv->setItem(10, $grass);
-		$inv->setItem(16, $stone);
+		$item = Item::get($this->getConfig()->get("Item-id-1"))->setCustomName($this->getConfig()->get("Create-Island-Item-Name"));
+		$item2 = Item::get($this->getConfig()->get("Item-id-2"))->setCustomName($this->getConfig()->get("Invite-Manage-Item-Name"));
+		$inv->setItem(10, $item);
+		$inv->setItem(16, $item2);
 		$menu->send($player);
 	}
 
@@ -75,14 +75,14 @@ class Main extends PluginBase{
 		$item = $action->getOut();
 		$player = $action->getPlayer();
 		$itemClicked = $item;
-		if($item->getCustomName() === "§r§aCreate Island"){
+		if($item->getId() == ($this->getConfig()->get("Item-id-1"))){
 			$inv = $action->getAction()->getInventory();
 			$inv->onClose($player);
 			return $action->discard()->then(function(Player $player) : void{
 			         $this->IslandCreation2($player);
 			});
 		}
-		if($item->getCustomName() === "§r§aAccept Invite"){
+		if($item->getId() == ($this->getConfig()->get("Item-id-2"))){
 			$inv = $action->getAction()->getInventory();
 			$inv->onClose($player);
 			return $action->discard()->then(function(Player $player) : void{
@@ -97,12 +97,18 @@ class Main extends PluginBase{
 		$menu = InvMenu::create(InvMenu::TYPE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "iscreate2"]));
-		$menu->setName("Choose Island");
+		$menu->setName($this->getConfig()->get("Choose-Island-Menu-Name"));
 		$inv = $menu->getInventory();
-		$grass = Item::get(2)->setCustomName("§r§aBasic Island");
-		$sand = Item::get(12)->setCustomName("§r§aPalm Island");
-		$inv->setItem(10, $grass);
-		$inv->setItem(16, $sand);
+		$item3 = Item::get($this->getConfig()->get("Item-id-3"))->setCustomName($this->getConfig()->get("Basic-Island-Item-Name"));
+		$item4 = Item::get($this->getConfig()->get("Item-id-4"))->setCustomName($this->getConfig()->get("Palm-Island-Item-Name"));
+		$item5 = Item::get($this->getConfig()->get("Item-id-5"))->setCustomName($this->getConfig()->get("Shelly-Island-Item-Name"));
+		$item6 = Item::get($this->getConfig()->get("Item-id-6"))->setCustomName($this->getConfig()->get("Op-Island-Item-Name"));
+		$item7 = Item::get($this->getConfig()->get("Item-id-7"))->setCustomName($this->getConfig()->get("Lost-Island-Item-Name"));
+		$inv->setItem(9, $item3);
+		$inv->setItem(11, $item4);
+		$inv->setItem(13, $item5);
+		$inv->setItem(15, $item6);
+		$inv->setItem(17, $item7);
 		$menu->send($player);
 	}
 
@@ -110,29 +116,46 @@ class Main extends PluginBase{
 		$item = $action->getOut();
 		$player = $action->getPlayer();
 		$itemClicked = $item;
-		if($item->getCustomName() === "§r§aBasic Island"){
+		if($item->getId() == ($this->getConfig()->get("Item-id-3"))){
 			$action->getAction()->getInventory()->onClose($player);
 			\pocketmine\Server::getInstance()->dispatchCommand($player, "is create");
 			return $action->discard();
 		}
-		if($item->getCustomName() === "§r§aPalm Island"){
+		if($item->getId() == ($this->getConfig()->get("Item-id-4"))){
 			$action->getAction()->getInventory()->onClose($player);
 			\pocketmine\Server::getInstance()->dispatchCommand($player, "is create Palm");
+			return $action->discard();
+		}
+		if($item->getId() == ($this->getConfig()->get("Item-id-5"))){
+			$action->getAction()->getInventory()->onClose($player);
+			\pocketmine\Server::getInstance()->dispatchCommand($player, "is create Shelly");
+			return $action->discard();
+		}
+		if($item->getId() == ($this->getConfig()->get("Item-id-6"))){
+			$action->getAction()->getInventory()->onClose($player);
+			\pocketmine\Server::getInstance()->dispatchCommand($player, "is create Op");
+			return $action->discard();
+		}
+		if($item->getId() == ($this->getConfig()->get("Item-id-7"))){
+			$action->getAction()->getInventory()->onClose($player);
+			\pocketmine\Server::getInstance()->dispatchCommand($player, "is create Lost");
 			return $action->discard();
 		}
 		return $action->discard();
 	}
 
 	public function islandManagement(Player $player){
-		$menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
+		$menu = InvMenu::create(InvMenu::TYPE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "ismanage"]));
-		$menu->setName("Management");
+		$menu->setName($this->getConfig()->get("Island-Management-Menu-Name"));
 		$inv = $menu->getInventory();
-		$skull = Item::get(397, 3)->setCustomName("§r§aManage Members");
-		$grass = Item::get(1)->setCustomName("§r§aManage Island");
-		$inv->setItem(10, $skull);
-		$inv->setItem(16, $grass);
+		$item8 = Item::get($this->getConfig()->get("Item-id-8"))->setCustomName($this->getConfig()->get("Manage-Members-Item-Name"));
+		$item9 = Item::get($this->getConfig()->get("Item-id-9"))->setCustomName($this->getConfig()->get("Manage-Island-Item-Name"));
+		$item10 = Item::get($this->getConfig()->get("Item-id-10"))->setCustomName($this->getConfig()->get("Remove-Island-Item-Name"));
+		$inv->setItem(10, $item8);
+		$inv->setItem(13, $item9);
+		$inv->setItem(16, $item10);
 		$menu->send($player);
 	}
 
@@ -140,19 +163,24 @@ class Main extends PluginBase{
 		$item = $action->getOut();
 		$player = $action->getPlayer();
 		$itemClicked = $item;
-		if($item->getCustomName() === "§r§aManage Members"){
+		if($item->getId() == ($this->getConfig()->get("Item-id-8"))){
 			$inv = $action->getAction()->getInventory();
 			$inv->onClose($player);
 			return $action->discard()->then(function(Player $player) : void{
 			         $this->ismanagemembers($player);
 			});
 		}
-		if($item->getCustomName() === "§r§aManage Island"){
+		if($item->getId() == ($this->getConfig()->get("Item-id-9"))){
 			$inv = $action->getAction()->getInventory();
 			$inv->onClose($player);
 			return $action->discard()->then(function(Player $player) : void{
 			         $this->ismanageisland($player);
 			});
+		}
+		if($item->getId() == ($this->getConfig()->get("Item-id-10"))){
+			$action->getAction()->getInventory()->onClose($player);
+			\pocketmine\Server::getInstance()->dispatchCommand($player, "is disband");
+			return $action->discard();
 		}
     }
 }
