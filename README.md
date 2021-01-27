@@ -8,7 +8,9 @@ An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an int
 3.Go to plugin_data folder click SkyBlockGui folder and click Config.yml <br>
 4.Make sure to restart your server when u change a thing on config. <br>
 
-## Special Thanks to [Clarence](https://github.com/Clarence2810) and [EndermanBug](https://github.com/Endermanbugzjfc)
+## Special Thanks to: <br>
+
+[Clarence](https://github.com/Clarence2810) and [EndermanBug](https://github.com/Endermanbugzjfc)
 
 ## WARNING!! 
 Still in development
