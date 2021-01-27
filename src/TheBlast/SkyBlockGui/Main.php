@@ -23,6 +23,9 @@ use room17\SkyBlock\utils\message\MessageContainer;
 class Main extends PluginBase{
 
 	public function onEnable(){
+		@mkdir($this->getDataFolder());
+                $this->saveDefaultConfig();
+                $this->getResources("config.yml");
 		$this->getLogger()->info("enabled");
 		$api = SkyBlock::getInstance();
 		if(!InvMenuHandler::isRegistered()){
@@ -59,7 +62,7 @@ class Main extends PluginBase{
 		$menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
 		$menu->readOnly();
 		$menu->setListener(\Closure::fromCallable([$this, "sbmenu"]));
-		$menu->setName("Menu");
+		$menu->setName($this->getConfig()->get("Island-Creation-Name"));
 		$inv = $menu->getInventory();
 		$skull = Item::get(397, 3)->setCustomName("§r§aCreate Island");
 		$inv->setItem(0, $skull);
