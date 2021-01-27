@@ -24,8 +24,8 @@ class Main extends PluginBase{
 
 	public function onEnable(){
 		@mkdir($this->getDataFolder());
-                $this->saveDefaultConfig();
-                $this->getResources("config.yml");
+        $this->saveResource("config.yml");
+        $this->saveDefaultConfig();
 		$this->getLogger()->info("enabled");
 		$api = SkyBlock::getInstance();
 		if(!InvMenuHandler::isRegistered()){
