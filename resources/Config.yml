@@ -1,38 +1,107 @@
 #Creation Menu management
 Island-Creation-Menu-Name: "Island"
 
+#Only up to 0-26
 Create-Island-Item-Name: "Create Island"
 Item-id-1: "1"
+Item-Slot-1: "10"
 
 Invite-Manage-Item-Name: "Invite Players"
 Item-id-2: "2"
+Item-Slot-2: "16"
 
 #Choose Island Menu Name
+#Only up to 0-26
 Choose-Island-Menu-Name: "Choose what island you want to make"
 
 Basic-Island-Item-Name: "Basic Island"
-Item-id-3: "10"
+Item-id-3: "2"
+Item-Slot-3: "9"
 
 Palm-Island-Item-Name: "Palm Island"
-Item-id-4: "7"
+Item-id-4: "12"
+Item-Slot-4: "11"
 
 Shelly-Island-Item-Name: "Shelly Island"
 Item-id-5: "4"
+Item-Slot-5: "13"
 
 Op-Island-Item-Name: "Op Island"
-Item-id-6: "6"
+Item-id-6: "264"
+Item-Slot-6: "15"
 
 Lost-Island-Item-Name: "Lost Island"
-Item-id-7: "11"
+Item-id-7: "4"
+Item-Slot-7: "17"
 
 #Manage Island Menu Name
+#Only up to 0-26
 Island-Management-Menu-Name: "Manage Island"
 
 Manage-Members-Item-Name: "Manage Members"
-Item-id-8: "19"
+Item-id-8: "288"
+Item-Slot-8: "10"
 
 Manage-Island-Item-Name: "Manage Island"
-Item-id-9: "99"
+Item-id-9: "76"
+Item-Slot-9: "13"
 
 Remove-Island-Item-Name: "Remove Island"
-Item-id-10: "99"
+Item-id-10: "35"
+Item-Slot-10: "16"
+
+#Manage Members Menu Name
+#Only up to 0-53
+Management-Members-Menu-Name: "Manage Members"
+
+Cooperate-Members-Item-Name: "Cooperate"
+Item-id-11: "80"
+Item-Slot-11: "10"
+
+Promote-Members-Item-Name: "Promote Members"
+Item-id-12: "90"
+Item-Slot-12: "13"
+
+Demote-Members-Item-Name: "Demote Members"
+Item-id-13: "85"
+Item-Slot-13: "16"
+
+Banish-Members-Item-Name: "Banish Members"
+Item-id-14: "94"
+Item-Slot-14: "28"
+
+Fire-Members-Item-Name: "Fire Members"
+Item-id-15: "199"
+Item-Slot-15: "31"
+
+Members-Members-Item-Name: "Island Members"
+Item-id-16: "97"
+Item-Slot-16: "34"
+
+#Manage Island
+#Only up to 0-53
+Management-Island-Menu-Name: "Manage Islands"
+
+Join-Island-Item-Name: "Join your island"
+Item-id-17: "80"
+Item-Slot-17: "10"
+
+Lock-Island-Item-Name: "Lock Island"
+Item-id-18: "90"
+Item-Slot-18: "13"
+
+Chat-Island-Item-Name: "Island Chat"
+Item-id-19: "85"
+Item-Slot-19: "16"
+
+Setspawn-Island-Item-Name: "Island Setspawn"
+Item-id-20: "94"
+Item-Slot-20: "28"
+
+Category-Island-Item-Name: "Island Category"
+Item-id-21: "199"
+Item-Slot-21: "31"
+
+Blocks-Island-Item-Name: "Island Blocks"
+Item-id-22: "97"
+Item-Slot-22: "34"
