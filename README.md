@@ -28,4 +28,4 @@ If there are any issues or suggestion you would like me to know go [here](https:
 
 ## Support me
 
-Support me by joining my [discord]() or by putting a star on this repo.
+Support me by joining my [discord](https://discord.gg/tH38gJg7xx) or by putting a star on this repo.
