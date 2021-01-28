@@ -2,7 +2,7 @@
 
 namespace TheBlast\SkyBlockGui;
 
-use jojoe77777\formapi\CustomForm;
+use libs\jojoe77777\FormApi\CustomForm;
 use libs\muqsit\invmenu\InvMenu;
 use libs\muqsit\invmenu\InvMenuHandler;
 use libs\muqsit\invmenu\transaction\InvMenuTransaction;
