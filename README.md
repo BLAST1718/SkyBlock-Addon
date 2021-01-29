@@ -13,7 +13,11 @@ An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an int
 
 ## Tutorial
 
-## Links
+# Commands
+
+| Command | Usage | Description |
+| ------- | ----- | ----------- |
+| /sb     | /sb   | Opens SkyBlock Menu |
 
 ## WARNING!! 
 1.Make sure to restart your server (not reload) when u change a somethings on config or the plugin will not work. <br>
