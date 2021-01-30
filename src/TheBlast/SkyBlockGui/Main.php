@@ -2,11 +2,11 @@
 
 namespace TheBlast\SkyBlockGui;
 
-use libs\jojoe77777\FormApi\CustomForm;
-use libs\muqsit\invmenu\InvMenu;
-use libs\muqsit\invmenu\InvMenuHandler;
-use libs\muqsit\invmenu\transaction\InvMenuTransaction;
-use libs\muqsit\invmenu\transaction\InvMenuTransactionResult;
+use jojoe77777\FormApi\CustomForm;
+use muqsit\invmenu\InvMenu;
+use muqsit\invmenu\InvMenuHandler;
+use muqsit\invmenu\transaction\InvMenuTransaction;
+use muqsit\invmenu\transaction\InvMenuTransactionResult;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\PluginCommand;
@@ -221,21 +221,21 @@ class Main extends PluginBase{
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
-                  $this->ismemberspromote($player);
+                  $this->ismemberscooperate($player);
          });
       }
       if($item->getCustomName() ==  $this->getConfig()->get("Promote-Members-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
-                  $this->ismembersdemote($player);
+                  $this->ismemberspromote($player);
          });
       }
       if($item->getCustomName() ==  $this->getConfig()->get("Demote-Members-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
-                  $this->ismemberscooperate($player);
+                  $this->ismembersdemote($player);
          });
       }
       if($item->getCustomName() ==  $this->getConfig()->get("Banish-Members-Item-Name")){
@@ -257,7 +257,7 @@ class Main extends PluginBase{
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is members");
          return $action->discard();
       }
-    }
+   }
 
     public function ismanageisland(Player $player){
       $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
@@ -404,4 +404,157 @@ class Main extends PluginBase{
          return $action->discard();
       }
    }
+
+   public function ismemberspromote($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is promote ".$result[0]);
+      });
+      $form->setTitle("Promote Member");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function ismembersdemote($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is demote ".$result[0]);
+      });
+      $form->setTitle("Demote Member");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function ismembersfire($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is fire ".$result[0]);
+      });
+      $form->setTitle("Fire Member");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function ismembersbanish($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is banish ".$result[0]);
+      });
+      $form->setTitle("Banish Member");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function ismemberscooperate($player){ 
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is cooperate ".$result[0]);
+      });
+      $form->setTitle("Cooperate Member");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function isvisit($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is visit ".$result[0]);
+      });
+      $form->setTitle("Visit Island");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function isinviteinvite($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is invite ".$result[0]);
+      });
+      $form->setTitle("Invite Player");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function isinviteaccept($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is accept ".$result[0]);
+      });
+      $form->setTitle("Accept Invite");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
+
+      public function isinvitedeny($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is deny ".$result[0]);
+      });
+      $form->setTitle("Deny Invite");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
 }
