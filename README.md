@@ -36,4 +36,4 @@ Support me by joining my [discord](https://discord.gg/tH38gJg7xx) or by putting 
 
 ## TODO
 
-[ ] Add ui
+- [x] Add ui
