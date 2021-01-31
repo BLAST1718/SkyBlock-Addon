@@ -1,5 +1,31 @@
 <?php
 
+# ____    _  __ __   __  ____    _        ___     ____   _  __ 
+#/ ___|  | |/ / \ \ / / | __ )  | |      / _ \   / ___| | |/ / 
+#\___ \  | ' /   \ V /  |  _ \  | |     | | | | | |     | ' /  
+# ___) | | . \    | |   | |_) | | |___  | |_| | | |___  | . \  
+#|____/  |_|\_\   |_|   |____/  |_____|  \___/   \____| |_|\_\
+#
+#
+#               ____   _   _   ___      __  _   _   ___  
+#              / ___| | | | | |_ _|    / / | | | | |_ _| 
+#             | |  _  | | | |  | |    / /  | | | |  | |  
+#             | |_| | | |_| |  | |   / /   | |_| |  | |  
+#              \____|  \___/  |___| /_/     \___/  |___|
+#
+#                        _               
+#                       | |__    _   _  
+#                       | '_ \  | | | | 
+#                       | |_) | | |_| | 
+#                       |_.__/   \__, | 
+#                                 |___/
+#
+# _____                  ____    _                 _    
+#|_   _| | |__     ___  | __ )  | |   __ _   ___  | |_    
+#  | |   | '_ \   / _ \ |  _ \  | |  / _` | / __| | __| 
+#  | |   | | | | |  __/ | |_) | | | | (_| | \__ \ | |_  
+#  |_|   |_| |_|  \___| |____/  |_|  \__,_| |___/  \__|
+
 namespace TheBlast\SkyBlockGui;
 
 use jojoe77777\FormApi\CustomForm;
@@ -49,58 +75,64 @@ class Main extends PluginBase{
                 }
       $session = SessionLocator::getSession($player);
                 if (!$session->hasIsland()) {
-                        $this->islandCreation($player, $session);
+                        $this->islandCreation($this->getConfig()->get("Option")($player, $session));
                     } else {
-                        $this->islandManagement($player, $session);
+                        $this->islandManagement($this->getConfig()->get("Option")($player, $session));
                 }
                     break;
         }
         return true;
     }
 
-   public function islandCreation(Player $player){
+#      ____   _   _   ___  
+#     / ___| | | | | |_ _| 
+#    | |  _  | | | |  | |  
+#    | |_| | | |_| |  | |  
+#     \____|  \___/  |___|
+
+    public function islandCreationGui(Player $player){
       $menu = InvMenu::create(InvMenu::TYPE_CHEST);
       $menu->readOnly();
-      $menu->setListener(\Closure::fromCallable([$this, "iscreate"]));
-      $menu->setName($this->getConfig()->get("Island-Creation-Menu-Name"));
+      $menu->setListener(\Closure::fromCallable([$this, "iscreategui"]));
+      $menu->setName($this->getConfig()->get("Island-Creation-Gui-Menu-Name"));
       $inv = $menu->getInventory();
-      $item1 = Item::get($this->getConfig()->get("Item-id-1"), $this->getConfig()->get("Item-meta-1"), 1)->setCustomName($this->getConfig()->get("Create-Island-Item-Name"));
-      $item2 = Item::get($this->getConfig()->get("Item-id-2"), $this->getConfig()->get("Item-meta-2"), 1)->setCustomName($this->getConfig()->get("Invite-Manage-Item-Name"));
+      $item1 = Item::get($this->getConfig()->get("Item-id-1"), $this->getConfig()->get("Item-meta-1"), 1)->setCustomName($this->getConfig()->get("Create-Island-Gui-Item-Name"));
+      $item2 = Item::get($this->getConfig()->get("Item-id-2"), $this->getConfig()->get("Item-meta-2"), 1)->setCustomName($this->getConfig()->get("Accept-Invite-Gui-Item-Name"));
       $inv->setItem($this->getConfig()->get("Item-Slot-1"), $item1);
       $inv->setItem($this->getConfig()->get("Item-Slot-2"), $item2);
       $menu->send($player);
-   }
+  }
 
-   public function iscreate(InvMenuTransaction $action) : InvMenuTransactionResult{
+   public function iscreategui(InvMenuTransaction $action) : InvMenuTransactionResult{
       $item = $action->getOut();
       $player = $action->getPlayer();
       $itemClicked = $item;
-      if($item->getCustomName() ==  $this->getConfig()->get("Create-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Create-Island-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
-                  $this->IslandCreation2($player);
+                  $this->IslandCreation2Gui($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Invite-Manage-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Accept-Invite-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is accept");
          return $action->discard();
       }
       return $action->discard();
-   }
+  }
 
-   public function islandCreation2(Player $player){
+   public function islandCreation2Gui(Player $player){
       $menu = InvMenu::create(InvMenu::TYPE_CHEST);
       $menu->readOnly();
-      $menu->setListener(\Closure::fromCallable([$this, "iscreate2"]));
-      $menu->setName($this->getConfig()->get("Choose-Island-Menu-Name"));
+      $menu->setListener(\Closure::fromCallable([$this, "iscreate2gui"]));
+      $menu->setName($this->getConfig()->get("Choose-Island-Gui-Menu-Name"));
       $inv = $menu->getInventory();
-      $item3 = Item::get($this->getConfig()->get("Item-id-3"), $this->getConfig()->get("Item-meta-3"), 1)->setCustomName($this->getConfig()->get("Basic-Island-Item-Name"));
-      $item4 = Item::get($this->getConfig()->get("Item-id-4"), $this->getConfig()->get("Item-meta-4"), 1)->setCustomName($this->getConfig()->get("Palm-Island-Item-Name"));
-      $item5 = Item::get($this->getConfig()->get("Item-id-5"), $this->getConfig()->get("Item-meta-5"), 1)->setCustomName($this->getConfig()->get("Shelly-Island-Item-Name"));
-      $item6 = Item::get($this->getConfig()->get("Item-id-6"), $this->getConfig()->get("Item-meta-6"), 1)->setCustomName($this->getConfig()->get("Op-Island-Item-Name"));
-      $item7 = Item::get($this->getConfig()->get("Item-id-7"), $this->getConfig()->get("Item-meta-7"), 1)->setCustomName($this->getConfig()->get("Lost-Island-Item-Name"));
+      $item3 = Item::get($this->getConfig()->get("Item-id-3"), $this->getConfig()->get("Item-meta-3"), 1)->setCustomName($this->getConfig()->get("Basic-Island-Gui-Item-Name"));
+      $item4 = Item::get($this->getConfig()->get("Item-id-4"), $this->getConfig()->get("Item-meta-4"), 1)->setCustomName($this->getConfig()->get("Palm-Island-Gui-Item-Name"));
+      $item5 = Item::get($this->getConfig()->get("Item-id-5"), $this->getConfig()->get("Item-meta-5"), 1)->setCustomName($this->getConfig()->get("Shelly-Island-Gui-Item-Name"));
+      $item6 = Item::get($this->getConfig()->get("Item-id-6"), $this->getConfig()->get("Item-meta-6"), 1)->setCustomName($this->getConfig()->get("Op-Island-Item-Gui-Name"));
+      $item7 = Item::get($this->getConfig()->get("Item-id-7"), $this->getConfig()->get("Item-meta-7"), 1)->setCustomName($this->getConfig()->get("Lost-Island-Item-Gui-Name"));
       $inv->setItem($this->getConfig()->get("Item-Slot-3"), $item3);
       $inv->setItem($this->getConfig()->get("Item-Slot-4"), $item4);
       $inv->setItem($this->getConfig()->get("Item-Slot-5"), $item5);
@@ -109,31 +141,31 @@ class Main extends PluginBase{
       $menu->send($player);
    }
 
-   public function iscreate2(InvMenuTransaction $action) : InvMenuTransactionResult{
+   public function iscreate2gui(InvMenuTransaction $action) : InvMenuTransactionResult{
       $item = $action->getOut();
       $player = $action->getPlayer();
       $itemClicked = $item;
-      if($item->getCustomName() ==  $this->getConfig()->get("Basic-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Basic-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is create");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Palm-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Palm-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Palm");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Shelly-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Shelly-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Shelly");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Op-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Op-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Op");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Lost-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Lost-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Lost");
          return $action->discard();
@@ -141,69 +173,60 @@ class Main extends PluginBase{
       return $action->discard();
    }
 
-   public function islandManagement(Player $player){
+   public function islandManagementGui(Player $player){
       $menu = InvMenu::create(InvMenu::TYPE_CHEST);
       $menu->readOnly();
-      $menu->setListener(\Closure::fromCallable([$this, "ismanage"]));
-      $menu->setName($this->getConfig()->get("Island-Management-Menu-Name"));
+      $menu->setListener(\Closure::fromCallable([$this, "ismanagegui"]));
+      $menu->setName($this->getConfig()->get("Island-Management-Gui-Menu-Name"));
       $inv = $menu->getInventory();
-      $item8 = Item::get($this->getConfig()->get("Item-id-8"), $this->getConfig()->get("Item-meta-8"), 1)->setCustomName($this->getConfig()->get("Manage-Members-Item-Name"));
-      $item9 = Item::get($this->getConfig()->get("Item-id-9"), $this->getConfig()->get("Item-meta-9"), 1)->setCustomName($this->getConfig()->get("Manage-Island-Item-Name"));
-      $item10 = Item::get($this->getConfig()->get("Item-id-10"), $this->getConfig()->get("Item-meta-10"), 1)->setCustomName($this->getConfig()->get("Warning-Island-Item-Name"));
-      $item23 = Item::get($this->getConfig()->get("Item-id-23"), $this->getConfig()->get("Item-meta-23"), 1)->setCustomName($this->getConfig()->get("Manage-Invite-Item-Name"));
+      $item8 = Item::get($this->getConfig()->get("Item-id-8"), $this->getConfig()->get("Item-meta-8"), 1)->setCustomName($this->getConfig()->get("Manage-Members-Gui-Item-Name"));
+      $item9 = Item::get($this->getConfig()->get("Item-id-9"), $this->getConfig()->get("Item-meta-9"), 1)->setCustomName($this->getConfig()->get("Manage-Island-Gui-Item-Name"));
+      $item10 = Item::get($this->getConfig()->get("Item-id-10"), $this->getConfig()->get("Item-meta-10"), 1)->setCustomName($this->getConfig()->get("Warning-Area-Island-Gui-Item-Name"));
       $inv->setItem($this->getConfig()->get("Item-Slot-8"), $item8);
       $inv->setItem($this->getConfig()->get("Item-Slot-9"), $item9);
       $inv->setItem($this->getConfig()->get("Item-Slot-10"), $item10);
-      $inv->setItem($this->getConfig()->get("Item-Slot-23"), $item23);
       $menu->send($player);
    }
 
-   public function ismanage(InvMenuTransaction $action) : InvMenuTransactionResult{
+   public function ismanagegui(InvMenuTransaction $action) : InvMenuTransactionResult{
       $item = $action->getOut();
       $player = $action->getPlayer();
       $itemClicked = $item;
-      if($item->getCustomName() ==  $this->getConfig()->get("Manage-Members-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Manage-Members-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
-                  $this->ismanagemembers($player);
+                  $this->ismanagemembersgui($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Manage-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Manage-Island-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
-                  $this->ismanageisland($player);
+                  $this->ismanageislandgui($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Manage-Invite-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Warning-Area-Island-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
-                  $this->ismanageinvites($player);
-         });
-      }
-      if($item->getCustomName() ==  $this->getConfig()->get("Warning-Island-Item-Name")){
-         $inv = $action->getAction()->getInventory();
-         $inv->onClose($player);
-         return $action->discard()->then(function(Player $player) : void{
-                  $this->ismanagewarning($player);
+                  $this->ismanagewarninggui($player);
          });
       }
    }
 
-    public function ismanagemembers(Player $player){
+   public function ismanagemembersgui(Player $player){
       $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
       $menu->readOnly();
-      $menu->setListener(\Closure::fromCallable([$this, "ismanagemember"]));
-      $menu->setName($this->getConfig()->get("Management-Members-Menu-Name"));
+      $menu->setListener(\Closure::fromCallable([$this, "ismanagemembergui"]));
+      $menu->setName($this->getConfig()->get("Management-Members-Gui-Menu-Name"));
       $inv = $menu->getInventory();
-      $item11 = Item::get($this->getConfig()->get("Item-id-11"), $this->getConfig()->get("Item-meta-11"), 1)->setCustomName($this->getConfig()->get("Cooperate-Members-Item-Name"));
-      $item12 = Item::get($this->getConfig()->get("Item-id-12"), $this->getConfig()->get("Item-meta-12"), 1)->setCustomName($this->getConfig()->get("Promote-Members-Item-Name"));
-      $item13 = Item::get($this->getConfig()->get("Item-id-13"), $this->getConfig()->get("Item-meta-13"), 1)->setCustomName($this->getConfig()->get("Demote-Members-Item-Name"));
-      $item14 = Item::get($this->getConfig()->get("Item-id-14"), $this->getConfig()->get("Item-meta-14"), 1)->setCustomName($this->getConfig()->get("Banish-Members-Item-Name"));
-      $item15 = Item::get($this->getConfig()->get("Item-id-15"), $this->getConfig()->get("Item-meta-15"), 1)->setCustomName($this->getConfig()->get("Fire-Members-Item-Name"));
-      $item16 = Item::get($this->getConfig()->get("Item-id-16"), $this->getConfig()->get("Item-meta-16"), 1)->setCustomName($this->getConfig()->get("Members-Members-Item-Name"));
+      $item11 = Item::get($this->getConfig()->get("Item-id-11"), $this->getConfig()->get("Item-meta-11"), 1)->setCustomName($this->getConfig()->get("Cooperate-Members-Gui-Item-Name"));
+      $item12 = Item::get($this->getConfig()->get("Item-id-12"), $this->getConfig()->get("Item-meta-12"), 1)->setCustomName($this->getConfig()->get("Promote-Members-Gui-Item-Name"));
+      $item13 = Item::get($this->getConfig()->get("Item-id-13"), $this->getConfig()->get("Item-meta-13"), 1)->setCustomName($this->getConfig()->get("Demote-Members-Gui-Item-Name"));
+      $item14 = Item::get($this->getConfig()->get("Item-id-14"), $this->getConfig()->get("Item-meta-14"), 1)->setCustomName($this->getConfig()->get("Banish-Members-Gui-Item-Name"));
+      $item15 = Item::get($this->getConfig()->get("Item-id-15"), $this->getConfig()->get("Item-meta-15"), 1)->setCustomName($this->getConfig()->get("Fire-Members-Gui-Item-Name"));
+      $item16 = Item::get($this->getConfig()->get("Item-id-16"), $this->getConfig()->get("Item-meta-16"), 1)->setCustomName($this->getConfig()->get("Members-Members-Gui-Item-Name"));
       $inv->setItem($this->getConfig()->get("Item-Slot-11"), $item11);
       $inv->setItem($this->getConfig()->get("Item-Slot-12"), $item12);
       $inv->setItem($this->getConfig()->get("Item-Slot-13"), $item13);
@@ -213,199 +236,227 @@ class Main extends PluginBase{
       $menu->send($player);
    }
 
-   public function ismanagemember(InvMenuTransaction $action) : InvMenuTransactionResult{
+   public function ismanagemembergui(InvMenuTransaction $action) : InvMenuTransactionResult{
       $item = $action->getOut();
       $player = $action->getPlayer();
       $itemClicked = $item;
-      if($item->getCustomName() ==  $this->getConfig()->get("Cooperate-Members-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Cooperate-Members-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
                   $this->ismemberscooperate($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Promote-Members-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Promote-Members-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
                   $this->ismemberspromote($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Demote-Members-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Demote-Members-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
                   $this->ismembersdemote($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Banish-Members-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Banish-Members-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
                   $this->ismembersbanish($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Fire-Members-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Fire-Members-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
                   $this->ismembersfire($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Members-Members-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Members-Members-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is members");
          return $action->discard();
       }
    }
 
-    public function ismanageisland(Player $player){
+   public function ismanageislandgui(Player $player){
       $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
       $menu->readOnly();
-      $menu->setListener(\Closure::fromCallable([$this, "ismanageislan"]));
-      $menu->setName($this->getConfig()->get("Management-Island-Menu-Name"));
+      $menu->setListener(\Closure::fromCallable([$this, "ismanageislangui"]));
+      $menu->setName($this->getConfig()->get("Management-Island-Gui-Menu-Name"));
       $inv = $menu->getInventory();
-      $item17 = Item::get($this->getConfig()->get("Item-id-17"), $this->getConfig()->get("Item-meta-17"), 1)->setCustomName($this->getConfig()->get("Join-Island-Item-Name"));
-      $item18 = Item::get($this->getConfig()->get("Item-id-18"), $this->getConfig()->get("Item-meta-18"), 1)->setCustomName($this->getConfig()->get("Lock-Island-Item-Name"));
-      $item19 = Item::get($this->getConfig()->get("Item-id-19"), $this->getConfig()->get("Item-meta-19"), 1)->setCustomName($this->getConfig()->get("Chat-Island-Item-Name"));
-      $item20 = Item::get($this->getConfig()->get("Item-id-20"), $this->getConfig()->get("Item-meta-20"), 1)->setCustomName($this->getConfig()->get("Setspawn-Island-Item-Name"));
-      $item21 = Item::get($this->getConfig()->get("Item-id-21"), $this->getConfig()->get("Item-meta-21"), 1)->setCustomName($this->getConfig()->get("Category-Island-Item-Name"));
-      $item22 = Item::get($this->getConfig()->get("Item-id-22"), $this->getConfig()->get("Item-meta-22"), 1)->setCustomName($this->getConfig()->get("Blocks-Island-Item-Name"));
-      $item30 = Item::get($this->getConfig()->get("Item-id-30"), $this->getConfig()->get("Item-meta-30"), 1)->setCustomName($this->getConfig()->get("Visit-Island-Item-Name"));
-      $item31 = Item::get($this->getConfig()->get("Item-id-31"), $this->getConfig()->get("Item-meta-31"), 1)->setCustomName($this->getConfig()->get("Help-Island-Item-Name"));
+      $item17 = Item::get($this->getConfig()->get("Item-id-17"), $this->getConfig()->get("Item-meta-17"), 1)->setCustomName($this->getConfig()->get("Join-Island-Gui-Item-Name"));
+      $item18 = Item::get($this->getConfig()->get("Item-id-18"), $this->getConfig()->get("Item-meta-18"), 1)->setCustomName($this->getConfig()->get("Lock-Island-Gui-Item-Name"));
+      $item19 = Item::get($this->getConfig()->get("Item-id-19"), $this->getConfig()->get("Item-meta-19"), 1)->setCustomName($this->getConfig()->get("Chat-Island-Gui-Item-Name"));
+      $item20 = Item::get($this->getConfig()->get("Item-id-20"), $this->getConfig()->get("Item-meta-20"), 1)->setCustomName($this->getConfig()->get("Setspawn-Island-Gui-Item-Name"));
+      $item21 = Item::get($this->getConfig()->get("Item-id-21"), $this->getConfig()->get("Item-meta-21"), 1)->setCustomName($this->getConfig()->get("Category-Island-Gui-Item-Name"));
+      $item22 = Item::get($this->getConfig()->get("Item-id-22"), $this->getConfig()->get("Item-meta-22"), 1)->setCustomName($this->getConfig()->get("Blocks-Island-Gui-Item-Name"));
+      $item23 = Item::get($this->getConfig()->get("Item-id-23"), $this->getConfig()->get("Item-meta-23"), 1)->setCustomName($this->getConfig()->get("Visit-Island-Gui-Item-Name"));
+      $item24 = Item::get($this->getConfig()->get("Item-id-24"), $this->getConfig()->get("Item-meta-24"), 1)->setCustomName($this->getConfig()->get("Help-Island-Gui-Name"));
       $inv->setItem($this->getConfig()->get("Item-Slot-17"), $item17);
       $inv->setItem($this->getConfig()->get("Item-Slot-18"), $item18);
       $inv->setItem($this->getConfig()->get("Item-Slot-19"), $item19);
       $inv->setItem($this->getConfig()->get("Item-Slot-20"), $item20);
       $inv->setItem($this->getConfig()->get("Item-Slot-21"), $item21);
       $inv->setItem($this->getConfig()->get("Item-Slot-22"), $item22);
-      $inv->setItem($this->getConfig()->get("Item-Slot-30"), $item30);
-      $inv->setItem($this->getConfig()->get("Item-Slot-31"), $item31);
+      $inv->setItem($this->getConfig()->get("Item-Slot-23"), $item23);
+      $inv->setItem($this->getConfig()->get("Item-Slot-24"), $item24);
       $menu->send($player);
    }
 
-   public function ismanageislan(InvMenuTransaction $action) : InvMenuTransactionResult{
+   public function ismanageislangui(InvMenuTransaction $action) : InvMenuTransactionResult{
       $item = $action->getOut();
       $player = $action->getPlayer();
       $itemClicked = $item;
-      if($item->getCustomName() ==  $this->getConfig()->get("Join-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Join-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is join");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Lock-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Lock-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is lock");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Chat-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Chat-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is chat");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Setspawn-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Setspawn-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is setspawn");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Category-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Category-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is category");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Blocks-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Blocks-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is blocks");
          return $action->discard();
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Visit-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Visit-Island-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
                   $this->isvisit($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Help-Island-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Help-Island-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is help");
          return $action->discard();
       }
    }
 
-   public function ismanageinvites(Player $player){
+   public function ismanagewarninggui(Player $player){
       $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
       $menu->readOnly();
-      $menu->setListener(\Closure::fromCallable([$this, "ismanageinvite"]));
-      $menu->setName($this->getConfig()->get("Management-Invite-Menu-Name"));
+      $menu->setListener(\Closure::fromCallable([$this, "ismanagewarningui"]));
+      $menu->setName($this->getConfig()->get("Management-Warning-Gui-Menu-Name"));
       $inv = $menu->getInventory();
-      $item24 = Item::get($this->getConfig()->get("Item-id-24"), $this->getConfig()->get("Item-meta-24"), 1)->setCustomName($this->getConfig()->get("Accept-Invite-Item-Name"));
-      $item25 = Item::get($this->getConfig()->get("Item-id-25"), $this->getConfig()->get("Item-meta-25"), 1)->setCustomName($this->getConfig()->get("Deny-Invite-Item-Name"));
-      $item26 = Item::get($this->getConfig()->get("Item-id-26"), $this->getConfig()->get("Item-meta-26"), 1)->setCustomName($this->getConfig()->get("Invite-Invite-Item-Name"));
-      $inv->setItem($this->getConfig()->get("Item-Slot-24"), $item24);
+      $item25 = Item::get($this->getConfig()->get("Item-id-25"), $this->getConfig()->get("Item-meta-25"), 1)->setCustomName($this->getConfig()->get("Transfer-Warning-Gui-Item-Name"));
+      $item26 = Item::get($this->getConfig()->get("Item-id-26"), $this->getConfig()->get("Item-meta-26"), 1)->setCustomName($this->getConfig()->get("Disband-Warning-Gui-Item-Name"));
       $inv->setItem($this->getConfig()->get("Item-Slot-25"), $item25);
       $inv->setItem($this->getConfig()->get("Item-Slot-26"), $item26);
       $menu->send($player);
    }
 
-   public function ismanageinvite(InvMenuTransaction $action) : InvMenuTransactionResult{
+   public function ismanagewarningui(InvMenuTransaction $action) : InvMenuTransactionResult{
       $item = $action->getOut();
       $player = $action->getPlayer();
       $itemClicked = $item;
-      if($item->getCustomName() ==  $this->getConfig()->get("Accept-Invite-Item-Name")){
-         $inv = $action->getAction()->getInventory();
-         $inv->onClose($player);
-         return $action->discard()->then(function(Player $player) : void{
-                  $this->isinviteaccept($player);
-         });
-      }
-      if($item->getCustomName() ==  $this->getConfig()->get("Deny-Invite-Item-Name")){
-         $inv = $action->getAction()->getInventory();
-         $inv->onClose($player);
-         return $action->discard()->then(function(Player $player) : void{
-                  $this->isinvitedeny($player);
-         });
-      }
-      if($item->getCustomName() ==  $this->getConfig()->get("Invite-Invite-Item-Name")){
-         $inv = $action->getAction()->getInventory();
-         $inv->onClose($player);
-         return $action->discard()->then(function(Player $player) : void{
-                  $this->isinviteinvite($player);
-         });
-      }
-   }
-
-   public function ismanagewarning(Player $player){
-      $menu = InvMenu::create(InvMenu::TYPE_DOUBLE_CHEST);
-      $menu->readOnly();
-      $menu->setListener(\Closure::fromCallable([$this, "ismanagewarnin"]));
-      $menu->setName($this->getConfig()->get("Management-Warning-Menu-Name"));
-      $inv = $menu->getInventory();
-      $item27 = Item::get($this->getConfig()->get("Item-id-27"), $this->getConfig()->get("Item-meta-27"), 1)->setCustomName($this->getConfig()->get("Transfer-Warning-Item-Name"));
-      $item28 = Item::get($this->getConfig()->get("Item-id-28"), $this->getConfig()->get("Item-meta-28"), 1)->setCustomName($this->getConfig()->get("Disband-Warning-Item-Name"));
-      $inv->setItem($this->getConfig()->get("Item-Slot-27"), $item27);
-      $inv->setItem($this->getConfig()->get("Item-Slot-28"), $item28);
-      $menu->send($player);
-   }
-
-   public function ismanagewarnin(InvMenuTransaction $action) : InvMenuTransactionResult{
-      $item = $action->getOut();
-      $player = $action->getPlayer();
-      $itemClicked = $item;
-      if($item->getCustomName() ==  $this->getConfig()->get("Transfer-Warning-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Transfer-Warning-Gui-Item-Name")){
          $inv = $action->getAction()->getInventory();
          $inv->onClose($player);
          return $action->discard()->then(function(Player $player) : void{
                   $this->iswarningtransfer($player);
          });
       }
-      if($item->getCustomName() ==  $this->getConfig()->get("Disband-Warning-Item-Name")){
+      if($item->getCustomName() ==  $this->getConfig()->get("Disband-Warning-Gui-Item-Name")){
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is disband");
          return $action->discard();
       }
    }
 
-   public function ismemberspromote($player){
+#    _   _   ___  
+#   | | | | |_ _| 
+#   | | | |  | |  
+#   | |_| |  | |  
+#    \___/  |___|
+
+   public function islandCreationUi(Player $player): void {
+        $form = createSimpleForm(function (Player $player, $data) use ($session) {
+            $result = $data;
+            if ($result === null)
+                return;
+
+            switch ($result) {
+                case 0:
+                    $this->IslandCreation2Ui($player);
+                    break;
+                case 1:
+                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is accept");
+                    break;
+            }
+        });
+        $form->setTitle($this->getConfig()->get("Island-Creation-Ui-Menu-Name"));
+        $form->setContent($this->getConfig()->get("Island-Creation-Ui-Content"));
+        $form->addButton($this->getConfig()->get("Create-Island-Ui-Button-Name"));
+        $form->addButton($this->getConfig()->get("Accept-Invite-Ui-Button-Name"));
+        $player->sendForm($form);
+    }
+
+
+   public function islandCreation2Ui(Player $player, Session $session): void {
+        $form = createSimpleForm(function (Player $player, $data) use ($session) {
+            $result = $data;
+            if ($result === null)
+                return;
+
+            switch ($result) {
+                case 0:
+                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create");
+                    break;
+                case 1:
+                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Palm");
+                    break;
+                case 2:
+                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Op");
+                    break;
+                case 3:
+                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Shelly");
+                    break;
+                case 4:
+                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Lost"); 
+                    break;
+            }
+        });
+        $form->setTitle("Create Island");
+        $form->setContent("Select an island to create!");
+        $form->addButton("Basic");
+        $form->addButton("Palm");
+        $form->addButton("Op");
+        $form->addButton("Shelly");
+        $form->addButton("Lost");
+        $player->sendForm($form);
+    }
+
+#     ___                           _     _        
+#    |_ _|  _ __    _ __    _   _  | |_  ( )  ___  
+#     | |  | '_ \  | '_ \  | | | | | __| |/  / __| 
+#     | |  | | | | | |_) | | |_| | | |_      \__ \ 
+#    |___| |_| |_| | .__/   \__,_|  \__|     |___/ 
+#              |_|
+
+    public function ismemberspromote($player){
       $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
          $form = $api->createCustomForm(function(Player $player, $result){
          if($result === null){
@@ -557,4 +608,5 @@ class Main extends PluginBase{
       $form->addInput("Input the name");
       $player->sendForm($form);
       }
+}
 }
