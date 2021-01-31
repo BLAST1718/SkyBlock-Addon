@@ -1,178 +1,192 @@
-#Creation Menu management
-Island-Creation-Menu-Name: "Island"
+# ____    _  __ __   __  ____    _        ___     ____   _  __ 
+#/ ___|  | |/ / \ \ / / | __ )  | |      / _ \   / ___| | |/ / 
+#\___ \  | ' /   \ V /  |  _ \  | |     | | | | | |     | ' /  
+# ___) | | . \    | |   | |_) | | |___  | |_| | | |___  | . \  
+#|____/  |_|\_\   |_|   |____/  |_____|  \___/   \____| |_|\_\
+#
+#
+#               ____   _   _   ___      __  _   _   ___  
+#              / ___| | | | | |_ _|    / / | | | | |_ _| 
+#             | |  _  | | | |  | |    / /  | | | |  | |  
+#             | |_| | | |_| |  | |   / /   | |_| |  | |  
+#              \____|  \___/  |___| /_/     \___/  |___|
+#
+#                        _               
+#                       | |__    _   _  
+#                       | '_ \  | | | | 
+#                       | |_) | | |_| | 
+#                       |_.__/   \__, | 
+#                                 |___/
+#
+# _____                  ____    _                 _    
+#|_   _| | |__     ___  | __ )  | |   __ _   ___  | |_    
+#  | |   | '_ \   / _ \ |  _ \  | |  / _` | / __| | __| 
+#  | |   | | | | |  __/ | |_) | | | | (_| | \__ \ | |_  
+#  |_|   |_| |_|  \___| |____/  |_|  \__,_| |___/  \__|
 
-#Only up to 0-26
-Create-Island-Item-Name: "Create Island"
-#The item-id of the item that will show up
+Option: "Ui"
+
+#      ____   _   _   ___  
+#     / ___| | | | | |_ _| 
+#    | |  _  | | | |  | |  
+#    | |_| | | |_| |  | |  
+#     \____|  \___/  |___|
+
+Island-Creation-Gui-Menu-Name: "Choose one!"
+
+Create-Island-Gui-Item-Name: "Create Island"
 Item-id-1: "1"
-#the meta of the item-id
 Item-meta-1: "0"
-#the item slot
-Item-Slot-1: "10"
+Item-Slot-1: "1"
 
-Invite-Manage-Item-Name: "Invite Players"
-Item-id-2: "2"
-Item-meta-2: "0"
-Item-Slot-2: "16"
+Accept-Invite-Gui-Item-Name: "Accept Invite"
+Item-id-2: "1"
+Item-meta-2: "5"
+Item-Slot-2: "2"
 
-#Choose Island Menu Name
-#Only up to 0-26
-Choose-Island-Menu-Name: "Choose what island you want to make"
+Choose-Island-Gui-Menu-Name: "Choose an Island"
 
-Basic-Island-Item-Name: "Basic Island"
-Item-id-3: "2"
+Basic-Island-Gui-Item-Name: "Basic Island"
+Item-id-3: "1"
 Item-meta-3: "0"
-Item-Slot-3: "9"
+Item-Slot-3: "1"
 
-Palm-Island-Item-Name: "Palm Island"
-Item-id-4: "12"
+Palm-Island-Gui-Item-Name: "Palm Island"
+Item-id-4: "1"
 Item-meta-4: "0"
-Item-Slot-4: "11"
+Item-Slot-4: "2"
 
-Shelly-Island-Item-Name: "Shelly Island"
-Item-id-5: "4"
+Shelly-Island-Gui-Item-Name: "Shelly Island"
+Item-id-5: "1"
 Item-meta-5: "0"
-Item-Slot-5: "13"
+Item-Slot-5: "3"
 
-Op-Island-Item-Name: "Op Island"
-Item-id-6: "264"
+Op-Island-Gui-Item-Name: "Op Island"
+Item-id-6: "1"
 Item-meta-6: "0"
-Item-Slot-6: "15"
+Item-Slot-6: "4"
 
-Lost-Island-Item-Name: "Lost Island"
-Item-id-7: "4"
+Lost-Island-Gui-Item-Name: "Lost Island"
+Item-id-7: "1"
 Item-meta-7: "0"
-Item-Slot-7: "17"
+Item-Slot-7: "5"
 
-#Manage Island Menu Name
-#Only up to 0-26
-Island-Management-Menu-Name: "Manage Island"
+Island-Management-Gui-Menu-Name: "Management"
 
-Manage-Members-Item-Name: "Manage Members"
-Item-id-8: "288"
+Manage-Members-Gui-Item-Name: "Manage Members"
+Item-id-8: "1"
 Item-meta-8: "0"
-Item-Slot-8: "10"
+Item-Slot-8: "1"
 
-Manage-Island-Item-Name: "Manage Island"
-Item-id-9: "76"
+Manage-Island-Gui-Item-Name: "Manage Island"
+Item-id-9: "1"
 Item-meta-9: "0"
-Item-Slot-9: "12"
+Item-Slot-9: "2"
 
-Warning-Island-Item-Name: "Remove Island"
-Item-id-10: "35"
+Warning-Area-Island-Gui-Item-Name: "Warning Area!"
+Item-id-10: "1"
 Item-meta-10: "0"
-Item-Slot-10: "16"
+Item-Slot-10: "3"
 
-Manage-Invite-Item-Name: "Manage Invite"
-Item-id-23: "35"
-Item-meta-23: "0"
-Item-Slot-23: "14"
+Management-Members-Gui-Menu-Name: "Manage Members"
 
-#Manage Members Menu Name
-#Only up to 0-53
-Management-Members-Menu-Name: "Manage Members"
-
-Cooperate-Members-Item-Name: "Cooperate"
-Item-id-11: "80"
+Cooperate-Members-Gui-Item-Name: "Cooperate"
+Item-id-11: "1"
 Item-meta-11: "0"
-Item-Slot-11: "10"
+Item-Slot-11: "1"
 
-Promote-Members-Item-Name: "Promote Members"
-Item-id-12: "90"
+Promote-Members-Gui-Item-Name: "Promote"
+Item-id-12: "1"
 Item-meta-12: "0"
-Item-Slot-12: "13"
+Item-Slot-12: "2"
 
-Demote-Members-Item-Name: "Demote Members"
-Item-id-13: "85"
+Demote-Members-Gui-Item-Name: "Demote"
+Item-id-13: "1"
 Item-meta-13: "0"
-Item-Slot-13: "16"
+Item-Slot-13: "3"
 
-Banish-Members-Item-Name: "Banish Members"
-Item-id-14: "94"
+Banish-Members-Gui-Item-Name: "Banish"
+Item-id-14: "1"
 Item-meta-14: "0"
-Item-Slot-14: "28"
+Item-Slot-14: "4"
 
-Fire-Members-Item-Name: "Fire Members"
-Item-id-15: "199"
+Fire-Members-Gui-Item-Name: "Fire"
+Item-id-15: "1"
 Item-meta-15: "0"
-Item-Slot-15: "31"
+Item-Slot-15: "5"
 
-Members-Members-Item-Name: "Island Members"
-Item-id-16: "97"
+Members-Members-Gui-Item-Name: "Members"
+Item-id-16: "1"
 Item-meta-16: "0"
-Item-Slot-16: "34"
+Item-Slot-16: "6"
 
-#Manage Island
-#Only up to 0-53
-Management-Island-Menu-Name: "Manage Islands"
+Management-Island-Gui-Menu-Name: "Manage Island"
 
-Join-Island-Item-Name: "Join your island"
-Item-id-17: "80"
+Join-Island-Gui-Item-Name: "join"
+Item-id-17: "1"
 Item-meta-17: "0"
-Item-Slot-17: "10"
+Item-Slot-17: "1"
 
-Lock-Island-Item-Name: "Lock Island"
-Item-id-18: "90"
+Lock-Island-Gui-Item-Name: "Lock"
+Item-id-18: "1"
 Item-meta-18: "0"
-Item-Slot-18: "13"
+Item-Slot-18: "2"
 
-Chat-Island-Item-Name: "Island Chat"
-Item-id-19: "85"
+Chat-Island-Gui-Item-Name: "Chat"
+Item-id-19: "1"
 Item-meta-19: "0"
-Item-Slot-19: "16"
+Item-Slot-19: "3"
 
-Setspawn-Island-Item-Name: "Island Setspawn"
-Item-id-20: "94"
+Setspawn-Island-Gui-Item-Name: "Setspawn"
+Item-id-20: "1"
 Item-meta-20: "0"
-Item-Slot-20: "28"
+Item-Slot-20: "4"
 
-Category-Island-Item-Name: "Island Category"
-Item-id-21: "199"
+Category-Island-Gui-Item-Name: "Category"
+Item-id-21: "1"
 Item-meta-21: "0"
-Item-Slot-21: "31"
+Item-Slot-21: "5"
 
-Blocks-Island-Item-Name: "Island Blocks"
-Item-id-22: "97"
+Blocks-Island-Gui-Item-Name: "Blocks"
+Item-id-22: "1"
 Item-meta-22: "0"
-Item-Slot-22: "34"
+Item-Slot-22: "6"
 
-Visit-Island-Item-Name: "Island Visit"
-Item-id-30: "109"
-Item-meta-30: "0"
-Item-Slot-30: "5"
+Visit-Island-Gui-Item-Name: "Visit"
+Item-id-23: "1"
+Item-meta-23: "0"
+Item-Slot-23: "7"
 
-Help-Island-Item-Name: "Island Help"
-Item-id-31: "108"
-Item-meta-31: "0"
-Item-Slot-33: "1"
-
-#Management-Invite-Menu-Name
-Management-Invite-Menu-Name:
-
-Accept-Invite-Item-Name: "Accept invite"
-Item-id-24: "101"
+Help-Island-Gui-Name: "Help"
+Item-id-24: "1"
 Item-meta-24: "0"
-Item-Slot-24: "1"
+Item-Slot-24: "8"
 
-Deny-Invite-Item-Name: "Deny invite"
-Item-id-25: "102"
+Management-Warning-Gui-Menu-Name: "Warning area!!"
+
+Transfer-Warning-Gui-Item-Name: "Transfer"
+Item-id-25: "1"
 Item-meta-25: "0"
-Item-Slot-25: "2"
+Item-Slot-25: "1"
 
-Invite-Invite-Item-Name: "Invite Players"
-Item-id-26: "108"
+Disband-Warning-Gui-Item-Name: "disband"
+Item-id-26: "1"
 Item-meta-26: "0"
-Item-Slot-26: "3"
+Item-Slot-26: "2"
 
-#manage warning
-Management-Warning-Menu-Name: "Warning!"
 
-Transfer-Warning-Item-Name: "Transfer Island"
-Item-id-27: "108"
-Item-meta-27: "0"
-Item-Slot-27: "1"
 
-Disband-Warning-Item-Name: "Disband Island"
-Item-id-28: "101"
-Item-meta-28: "0"
-Item-Slot-28: "3"
+#    _   _   ___  
+#   | | | | |_ _| 
+#   | | | |  | |  
+#   | |_| |  | |  
+#    \___/  |___|
+
+Island-Creation-Ui-Menu-Name: "Create Island"
+
+Island-Creation-Ui-Content: "Choose one!"
+
+Create-Island-Ui-Button-Name: "Create an Island"
+
+Accept-Invite-Ui-Button-Name: "Accept Invite"
+
