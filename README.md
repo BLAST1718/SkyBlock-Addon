@@ -1,5 +1,5 @@
 # SkyBlockGui
-An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an interferance like a chest/Inventory
+An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an interferance like a chest/Inventory.
 
 ## Installation
 
