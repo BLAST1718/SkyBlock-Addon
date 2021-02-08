@@ -24,7 +24,7 @@
 #  | |   | | | | |  __/ | |_) | | | | (_| | \__ \ | |_  
 #  |_|   |_| |_|  \___| |____/  |_|  \__,_| |___/  \__|
 
-Option: "Ui"
+Option: "ui"
 
 #      ____   _   _   ___  
 #     / ___| | | | | |_ _| 
@@ -43,6 +43,11 @@ Accept-Invite-Gui-Item-Name: "Accept Invite"
 Item-id-2: "1"
 Item-meta-2: "5"
 Item-Slot-2: "2"
+
+Visit-Island-Gui-Item-Name: "Visit Island"
+Item-id-27: "3"
+Item-meta-27: "0"
+Item-Slot-27: "3"
 
 Choose-Island-Gui-Menu-Name: "Choose an Island"
 
@@ -190,3 +195,47 @@ Create-Island-Ui-Button-Name: "Create an Island"
 
 Accept-Invite-Ui-Button-Name: "Accept Invite"
 
+Visit-Island-Ui-Button-Name: "Visit Island"
+
+Island-Creation2-Ui-Menu-Name: "Create Island"
+
+Island-Creation2-Ui-Content: "Choose What Island you want to make"
+
+Basic-Island-Ui-Button-Name: "Basic Island"
+Palm-Island-Ui-Button-Name: "Palm Island"
+Op-Island-Ui-Button-Name: "Op Island"
+Shelly-Island-Ui-Button-Name: "Shelly Island"
+Lost-Island-Ui-Button-Name: "Lost Island"
+
+Island-Management-Ui-Menu-Name: "hi"
+
+Island-Management-Ui-Content: "noob"
+
+Manage-Members-Ui-Button-Name: "manage members"
+Manage-Island-Ui-Button-Name: "Manage is"
+Warning-Area-Island-Ui-Button-Name: "Warning"
+
+Members-Management-Ui-Menu-Name: "Manage Members"
+Members-Management-Ui-Content: "Hi"
+Cooperate-Members-Ui-Button-Name: "Co-op"
+Promote-Members-Ui-Button-Name: "Promote"
+Demote-Members-Ui-Button-Name: "Demote"
+Banish-Members-Ui-Button-Name: "Banish"
+Fire-Members-Ui-Button-Name: "Fire"
+Members-Members-Ui-Button-Name: "Members"
+
+Island-Management2-Ui-Menu-Name: "Manage Island"
+Island-Management2-Ui-Content: "Content"
+Join-Island-Ui-Button-Name: "Join Island"
+Lock-Island-Ui-Button-Name: "Lock Island"
+Chat-Island-Ui-Button-Name: "Island Chat"
+Setspawn-Island-Ui-Button-Name: "Setspawn"
+Category-Island-Ui-Button-Name: "Island Category"
+Blocks-Island-Ui-Button-Name: "Island Blocks"
+Visit-Island-Ui-Button-Name: "Visit Island"
+Help-Island-Ui-Button-Name: "Island Help"
+
+Island-Warning-Ui-Menu-Name: "Warning Area"
+Island-Warning-Ui-Content: "xD"
+Transfer-Warning-Ui-Button-Name: "Transfer Island"
+Disband-Warning-Ui-Button-Name: "Disband Island"
