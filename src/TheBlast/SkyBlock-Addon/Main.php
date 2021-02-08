@@ -26,7 +26,7 @@
 #  | |   | | | | |  __/ | |_) | | | | (_| | \__ \ | |_  
 #  |_|   |_| |_|  \___| |____/  |_|  \__,_| |___/  \__|
 
-namespace TheBlast\SkyBlockGui;
+namespace TheBlast\SkyBlock-Addon;
 
 use libs\jojoe77777\FormApi\CustomForm;
 use libs\jojoe77777\FormApi\SimpleForm;
