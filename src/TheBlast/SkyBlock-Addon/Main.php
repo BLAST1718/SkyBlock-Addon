@@ -26,10 +26,10 @@
 #  | |   | | | | |  __/ | |_) | | | | (_| | \__ \ | |_  
 #  |_|   |_| |_|  \___| |____/  |_|  \__,_| |___/  \__|
 
-namespace TheBlast\SkyBlock-Addon;
+namespace TheBlast\SkyBlock;
 
-use libs\jojoe77777\FormApi\CustomForm;
-use libs\jojoe77777\FormApi\SimpleForm;
+use jojoe77777\FormApi\CustomForm;
+use jojoe77777\FormApi\SimpleForm;
 use muqsit\invmenu\InvMenu;
 use muqsit\invmenu\InvMenuHandler;
 use muqsit\invmenu\transaction\InvMenuTransaction;
