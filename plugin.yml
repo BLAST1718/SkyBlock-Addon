@@ -1,6 +1,6 @@
-name: SkyBlockGui
+name: SkyBlock-Addon
 author: TheBlast
-main: TheBlast\SkyBlockGui\Main
+main: TheBlast\SkyBlock-Addon\Main
 version: 1.0.0
 api: 3.0.0
 depend:
