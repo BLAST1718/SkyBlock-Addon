@@ -28,7 +28,8 @@
 
 namespace TheBlast\SkyBlockGui;
 
-use jojoe77777\FormApi\CustomForm;
+use libs\jojoe77777\FormApi\CustomForm;
+use libs\jojoe77777\FormApi\SimpleForm;
 use muqsit\invmenu\InvMenu;
 use muqsit\invmenu\InvMenuHandler;
 use muqsit\invmenu\transaction\InvMenuTransaction;
@@ -52,7 +53,6 @@ class Main extends PluginBase{
       @mkdir($this->getDataFolder());
         $this->saveResource("config.yml");
         $this->saveDefaultConfig();
-      $this->getLogger()->info("enabled");
       $api = SkyBlock::getInstance();
       if(!InvMenuHandler::isRegistered()){
          InvMenuHandler::register($this);
@@ -62,30 +62,35 @@ class Main extends PluginBase{
       $this->getServer()->getCommandMap()->register("sb1", $command);
    }
 
-   public function onDisable(){
-      $this->getLogger()->info("disabled");
+
+   public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
+       switch($command->getName()) {
+           case "sb1":
+           if(!$sender instanceof Player) {
+               $sender->sendMessage("Pls run this command ingame.");
+               return true;
+           }
+           $session = SessionLocator::getSession($sender);
+
+           if (!$session->hasIsland()) {
+               if ($this->getConfig()->get("Option") == "ui") {
+                   $this->islandCreationUi($sender);
+               }else {
+                   $this->islandCreationGui($sender);
+               }
+           }else {
+               if ($this->getConfig()->get("Option") == "ui") {
+                   $this->islandManagementUi($sender);
+               }else {
+                   $this->islandManagementGui($sender);
+               }
+           break;
+       }
    }
-
-   public function onCommand(CommandSender $player, Command $cmd, string $label, array $args) : bool{
-        switch($cmd->getName()){
-            case "sb1":
-                if(!$player instanceof Player){
-                    $player->sendMessage("SkyBlockGui");
-                    return true;
-                }
-      $session = SessionLocator::getSession($player);
-                if (!$session->hasIsland()) {
-                        $this->islandCreation($this->getConfig()->get("Option")($player, $session));
-                    } else {
-                        $this->islandManagement($this->getConfig()->get("Option")($player, $session));
-                }
-                    break;
-        }
-        return true;
-    }
-
+   return true;
+}
 #      ____   _   _   ___  
-#     / ___| | | | | |_ _| 
+#     / ___| | | | | |_ _|    
 #    | |  _  | | | |  | |  
 #    | |_| | | |_| |  | |  
 #     \____|  \___/  |___|
@@ -98,8 +103,10 @@ class Main extends PluginBase{
       $inv = $menu->getInventory();
       $item1 = Item::get($this->getConfig()->get("Item-id-1"), $this->getConfig()->get("Item-meta-1"), 1)->setCustomName($this->getConfig()->get("Create-Island-Gui-Item-Name"));
       $item2 = Item::get($this->getConfig()->get("Item-id-2"), $this->getConfig()->get("Item-meta-2"), 1)->setCustomName($this->getConfig()->get("Accept-Invite-Gui-Item-Name"));
+      $item27 = Item::get($this->getConfig()->get("Item-id-27"), $this->getConfig()->get("Item-meta-27"), 1)->setCustomName($this->getConfig()->get("Visit-Island-Gui-Item-Name"));
       $inv->setItem($this->getConfig()->get("Item-Slot-1"), $item1);
       $inv->setItem($this->getConfig()->get("Item-Slot-2"), $item2);
+      $inv->setItem($this->getConfig()->get("Item-Slot-27"), $item27);
       $menu->send($player);
   }
 
@@ -118,6 +125,13 @@ class Main extends PluginBase{
          $action->getAction()->getInventory()->onClose($player);
          \pocketmine\Server::getInstance()->dispatchCommand($player, "is accept");
          return $action->discard();
+      }
+      if($item->getCustomName() ==  $this->getConfig()->get("Visit-Island-Gui-Item-Name")){
+         $inv = $action->getAction()->getInventory();
+         $inv->onClose($player);
+         return $action->discard()->then(function(Player $player) : void{
+                  $this->isvisit($player);
+         });
       }
       return $action->discard();
   }
@@ -386,77 +400,253 @@ class Main extends PluginBase{
       }
    }
 
-#    _   _   ___  
-#   | | | | |_ _| 
-#   | | | |  | |  
-#   | |_| |  | |  
-#    \___/  |___|
+   public function islandCreationUi($player){
+                  $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+                  $form = $api->createSimpleForm(function (Player $player, int $data = null){
+                           $result = $data;
+                           if($result === null){
+                                    return true;
+                           }
+                           switch ($result){
+                                    //actions when button clicked
+                                    case 0:
+                                        $this->IslandCreation2Ui($player);
+                                    break;
 
-   public function islandCreationUi(Player $player): void {
-        $form = createSimpleForm(function (Player $player, $data) use ($session) {
+                                    case 1:
+                                        $this->getServer()->dispatchCommand($player, "is accept");
+                                    break;
+
+                                    case 2:
+                                        $this->isvisit($player);
+                                    break;
+                           }
+                  });
+       $form->setTitle($this->getConfig()->get("Island-Creation-Ui-Menu-Name"));
+       $form->setContent($this->getConfig()->get("Island-Creation-Ui-Content"));
+       $form->addButton($this->getConfig()->get("Create-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Accept-Invite-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Visit-Island-Ui-Button-Name"));
+       $player->sendForm($form);
+       return $form;
+         }
+
+   public function islandCreation2Ui($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+       $form = $api->createSimpleForm(function (Player $player, int $data = null){
             $result = $data;
-            if ($result === null)
-                return;
-
-            switch ($result) {
-                case 0:
-                    $this->IslandCreation2Ui($player);
-                    break;
-                case 1:
-                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is accept");
-                    break;
+            if($result === null){
+            return true;
             }
-        });
-        $form->setTitle($this->getConfig()->get("Island-Creation-Ui-Menu-Name"));
-        $form->setContent($this->getConfig()->get("Island-Creation-Ui-Content"));
-        $form->addButton($this->getConfig()->get("Create-Island-Ui-Button-Name"));
-        $form->addButton($this->getConfig()->get("Accept-Invite-Ui-Button-Name"));
-        $player->sendForm($form);
-    }
+               switch ($result){
+               //actions when button clicked
+               case 0;
+               $this->getServer()->dispatchCommand($player, "is create");
+               break;
 
+               case 1;
+               $this->getServer()->dispatchCommand($player, "is create Palm");
+               break;
 
-   public function islandCreation2Ui(Player $player, Session $session): void {
-        $form = createSimpleForm(function (Player $player, $data) use ($session) {
+               case 2;
+               $this->getServer()->dispatchCommand($player, "is create Op");
+               break;
+
+               case 3;
+               $this->getServer()->dispatchCommand($player, "is create Shelly");
+               break;
+
+               case 4;
+               $this->getServer()->dispatchCommand($player, "is create Lost");
+               break;
+                           }
+                  });
+       $form->setTitle($this->getConfig()->get("Island-Creation2-Ui-Menu-Name"));
+       $form->setContent($this->getConfig()->get("Island-Creation2-Ui-Content"));
+       $form->addButton($this->getConfig()->get("Basic-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Palm-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Op-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Shelly-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Lost-Island-Ui-Button-Name"));
+       $player->sendForm($form);
+       return $form;
+      }
+
+      public function islandManagementUi($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+       $form = $api->createSimpleForm(function (Player $player, int $data = null){
             $result = $data;
-            if ($result === null)
-                return;
-
-            switch ($result) {
-                case 0:
-                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create");
-                    break;
-                case 1:
-                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Palm");
-                    break;
-                case 2:
-                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Op");
-                    break;
-                case 3:
-                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Shelly");
-                    break;
-                case 4:
-                    \pocketmine\Server::getInstance()->dispatchCommand($player, "is create Lost"); 
-                    break;
+            if($result === null){
+            return true;
             }
-        });
-        $form->setTitle("Create Island");
-        $form->setContent("Select an island to create!");
-        $form->addButton("Basic");
-        $form->addButton("Palm");
-        $form->addButton("Op");
-        $form->addButton("Shelly");
-        $form->addButton("Lost");
-        $player->sendForm($form);
-    }
+               switch ($result){
+               //actions when button clicked
+               case 0;
+               $this->islandManageMembers($player);
+               break;
 
-#     ___                           _     _        
-#    |_ _|  _ __    _ __    _   _  | |_  ( )  ___  
-#     | |  | '_ \  | '_ \  | | | | | __| |/  / __| 
-#     | |  | | | | | |_) | | |_| | | |_      \__ \ 
-#    |___| |_| |_| | .__/   \__,_|  \__|     |___/ 
-#              |_|
+               case 1;
+               $this->islandManageIsland($player);
+               break;
 
-    public function ismemberspromote($player){
+               case 2;
+               $this->islandManageWarning($player);
+               break;
+
+               case 3;
+               $this->isvisit($player);
+               break;
+
+                           }
+                  });
+       $form->setTitle($this->getConfig()->get("Island-Management-Ui-Menu-Name"));
+       $form->setContent($this->getConfig()->get("Island-Management-Ui-Content"));
+       $form->addButton($this->getConfig()->get("Manage-Members-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Manage-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Warning-Area-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Visit-Island-Ui-Button-Name"));
+       $player->sendForm($form);
+       return $form;
+      }
+
+      public function islandManageMembers($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+       $form = $api->createSimpleForm(function (Player $player, int $data = null){
+            $result = $data;
+            if($result === null){
+            return true;
+            }
+               switch ($result){
+               //actions when button clicked
+               case 0;
+               $this->ismemberscooperate($player);
+               break;
+
+               case 1;
+               $this->ismemberspromote($player);
+               break;
+
+               case 2;
+               $this->ismembersdemote($player);
+               break;
+
+               case 3;
+               $this->ismembersbanish($player);
+               break;
+
+               case 4;
+               $this->ismembersfire($player);
+               break;
+
+               case 5;
+               $this->getServer()->dispatchCommand($player, "is members");
+               break;
+
+                           }
+                  });
+       $form->setTitle($this->getConfig()->get("Members-Management-Ui-Menu-Name"));
+       $form->setContent($this->getConfig()->get("Members-Management-Ui-Content"));
+       $form->addButton($this->getConfig()->get("Cooperate-Members-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Promote-Members-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Demote-Members-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Banish-Members-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Fire-Members-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Members-Members-Ui-Button-Name"));
+       $player->sendForm($form);
+       return $form;
+      }
+
+      public function islandManageIsland($player){
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+       $form = $api->createSimpleForm(function (Player $player, int $data = null){
+            $result = $data;
+            if($result === null){
+            return true;
+            }
+               switch ($result){
+               //actions when button clicked
+               case 0;
+               $this->getServer()->dispatchCommand($player, "is join");
+               break;
+
+               case 1;
+               $this->getServer()->dispatchCommand($player, "is lock");
+               break;
+
+               case 2;
+               $this->getServer()->dispatchCommand($player, "is chat");
+               break;
+
+               case 3;
+               $this->getServer()->dispatchCommand($player, "is setspawn");
+               break;
+
+               case 4;
+               $this->getServer()->dispatchCommand($player, "is category");
+               break;
+
+               case 5;
+               $this->getServer()->dispatchCommand($player, "is blocks");
+               break;
+
+               case 6:
+               $this->isvisit($player);
+               break;
+
+               case 7;
+               $this->getServer()->dispatchCommand($player, "is help");
+               break;
+
+                           }
+                  });
+       $form->setTitle($this->getConfig()->get("Island-Management2-Ui-Menu-Name"));
+       $form->setContent($this->getConfig()->get("Island-Management2-Ui-Content"));
+       $form->addButton($this->getConfig()->get("Join-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Lock-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Chat-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Setspawn-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Category-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Blocks-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Visit-Island-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Help-Island-Ui-Button-Name"));
+       $player->sendForm($form);
+       return $form;
+      }
+
+      public function islandManageWarning($player){
+                  $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+                  $form = $api->createSimpleForm(function (Player $player, int $data = null){
+                           $result = $data;
+                           if($result === null){
+                                    return true;
+                           }
+                           switch ($result){
+                                    //actions when button clicked
+                                    case 0:
+                                        $this->iswarningtransfer($player);
+                                    break;
+
+                                    case 1:
+                                        $this->getServer()->dispatchCommand($player, "is disband");
+                                    break;
+                           }
+                  });
+       $form->setTitle($this->getConfig()->get("Island-Warning-Ui-Menu-Name"));
+       $form->setContent($this->getConfig()->get("Island-Warning-Ui-Content"));
+       $form->addButton($this->getConfig()->get("Transfer-Warning-Ui-Button-Name"));
+       $form->addButton($this->getConfig()->get("Disband-Warning-Ui-Button-Name"));
+       $player->sendForm($form);
+       return $form;
+         }
+
+   /*
+   *
+   *
+   *
+   *
+   *
+   **/
+   public function ismemberspromote($player){
       $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
          $form = $api->createCustomForm(function(Player $player, $result){
          if($result === null){
@@ -592,7 +782,7 @@ class Main extends PluginBase{
       $player->sendForm($form);
       }
 
-      public function isinvitedeny($player){
+      public function isinvitedeny($player){ 
       $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
          $form = $api->createCustomForm(function(Player $player, $result){
          if($result === null){
@@ -608,5 +798,21 @@ class Main extends PluginBase{
       $form->addInput("Input the name");
       $player->sendForm($form);
       }
-}
+
+      public function iswarningtransfer($player){ 
+      $api = $this->getServer()->getPluginManager()->getPlugin("FormAPI");
+         $form = $api->createCustomForm(function(Player $player, $result){
+         if($result === null){
+            return;
+         }
+         if(trim($result[0]) === ""){
+            $player->sendActionbarMessage("§cPlease input name");
+            return;
+         }
+         $this->getServer()->getCommandMap()->dispatch($player, "is transfer ".$result[0]);
+      });
+      $form->setTitle("Transfer island");
+      $form->addInput("Input the name");
+      $player->sendForm($form);
+      }
 }
