@@ -1,15 +1,15 @@
 # SkyBlockGui
-An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an interferance like a chest/Inventory.
+An addon for [SkyBlock](https://poggit.pmmp.io/p/SkyBlock) plugin to have an interferance like a chest/Inventory and form.
 
 ## Installation
 
-1.Download the latest plugin update [here](https://poggit.pmmp.io/ci/BLAST1718/SkyBlockGui/SkyBlockGui) <br>
+1.Download the latest plugin update [here](https://poggit.pmmp.io/ci/BLAST1718/SkyBlockGui/SkyBlock-Addon) <br>
 2.Put it on your plugins folder <br>
-3.Go to plugin_data folder click SkyBlockGui folder and click Config.yml <br>
+3.Go to plugin_data folder click SkyBlock-Addon folder and click Config.yml <br>
 
-## Special Thanks to: <br>
+## Contributor <br>
 
-[Clarence](https://github.com/Clarence2810), [Alvin](https://github.com/alvin0319) and [EndermanBug](https://github.com/Endermanbugzjfc) for helping me fix errors and for teaching me.
+[Clarence](https://github.com/Clarence2810) <br> [Alvin](https://github.com/alvin0319) <br> [EndermanBug](https://github.com/Endermanbugzjfc) <br>
 
 ## Tutorial
 
@@ -28,7 +28,7 @@ None
 
 ## Issues and Suggestion <br>
 
-If there are any issues or suggestion you would like me to know go [here](https://github.com/BLAST1718/SkyBlockGui/issues) and click # New issues
+If there are any issues or suggestion you would like me to know go [here](https://github.com/BLAST1718/SkyBlock-Addon/issues) and click # New issues
 
 ## Support me
 
